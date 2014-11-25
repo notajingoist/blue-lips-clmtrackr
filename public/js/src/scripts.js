@@ -184,7 +184,7 @@ var BLUELIPS = {
             enter().
             append("svg:text").
             attr("x", function(datum, index) { return x(index); }).
-            attr("y", function(datum) { return height - y(datum.value); }).
+            attr("y", function(datum) { return height - 10 - y(datum.value); }).
             attr("dx", -barWidth/2).
             attr("dy", "1.2em").
             attr("text-anchor", "middle").
