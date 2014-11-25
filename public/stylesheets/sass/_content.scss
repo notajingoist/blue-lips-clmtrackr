@@ -58,3 +58,33 @@
     text-align: center;
     margin: 25px auto 0;
 }
+
+#icon1, #icon2, #icon3, #icon4, #icon5, #icon6 {
+    visibility : hidden;
+}
+
+#emotion-container {
+    width: 300px;
+    margin: 15px auto;
+    text-align: center;
+}
+
+.emotion-icon {
+    width : 40px;
+    height : 40px;
+    margin-top: 5px;
+    margin-left : 45px;
+    &:first-child {
+        margin-left: 0;
+    }
+}
+
+#emotion-icons {
+    height: 50px;
+}
+
+.bar {
+    fill: steelblue;
+    fill-opacity: 0.9;
+}
+
