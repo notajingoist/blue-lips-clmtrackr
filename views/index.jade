@@ -2,6 +2,7 @@ extend layout
 block content
     div(id='container')
         video(id='video-el', width='400', height='300', preload='auto', loop)
+        audio#myAudio(autoplay="autoplay" src="TheStory_01.mp3" type="audio/mpeg")
         canvas(id='overlay', width='400', height='300')
     canvas(id='sketch', width='400', height='300')
     div(id='controls')
