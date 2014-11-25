@@ -1,5 +1,3 @@
-
-
 var BLUELIPS = {
     init: function() {
         this.initVars();
@@ -9,6 +7,18 @@ var BLUELIPS = {
         this.initClm();
         this.initEmotion();
         this.initd3();
+
+        this.expressions = {
+            '1.5': {
+                type: 'happy',
+                amount: 0.5
+            },
+
+            '3.0': {
+                type: 'surprised',
+                amount: 0.6
+            }
+        };
     },
 
     initVars: function() {
