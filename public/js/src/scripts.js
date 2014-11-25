@@ -96,13 +96,6 @@ var BLUELIPS = {
         var er = this.ec.meanPredict(cp);
         if (er) {
             this.updateData(er);
-            // for (var i = 0;i < er.length;i++) {
-            //     if (er[i].value > 0.4) {
-            //         document.getElementById('icon'+(i+1)).style.visibility = 'visible';
-            //     } else {
-            //         document.getElementById('icon'+(i+1)).style.visibility = 'hidden';
-            //     }
-            // }
         }
     },
 
@@ -114,7 +107,7 @@ var BLUELIPS = {
 
     updateData: function(data) {
         for (var i = 0; i < data.length; i++) {
-            console.log(data[i]);
+            // console.log(data[i]);
         }
     }
 

@@ -3,13 +3,11 @@
     height: 100%;
     padding: 0;
     margin: 0 auto;
+    overflow: hidden;
 }
 
 .main-content {
-    height: 100%;
-    margin-top : 50px;
-    margin-left : auto;
-    margin-right : auto;
+    margin: 50px auto;
     max-width: 600px;
 }
 
@@ -19,22 +17,18 @@
 }
 
 #overlay {
+    @include transform(scaleX(-1));
+    -ms-filter : fliph; /*IE*/
+    filter : fliph; /*IE*/
     position: absolute;
     top: 0px;
     left: 0px;
-    -o-transform : scaleX(-1);
-    -webkit-transform : scaleX(-1);
-    transform : scaleX(-1);
-    -ms-filter : fliph; /*IE*/
-    filter : fliph; /*IE*/
     width : 600px;
     height : 450px;
 }
 
 #video-el {
-    -o-transform : scaleX(-1);
-    -webkit-transform : scaleX(-1);
-    transform : scaleX(-1);
+    @include transform(scaleX(-1));
     -ms-filter : fliph; /*IE*/
     filter : fliph; /*IE*/
     width : 600px;
@@ -46,9 +40,21 @@
 }
 
 .btn {
-    font-size: 16px;
+    @include transition(opacity 0.2s ease-in-out 0);
+    font-size: 13px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    padding: 10px 20px;
+    min-width: 200px;
+    background: #fff;
+    color: #999;
+    &:hover {
+        cursor: pointer;
+        opacity: 0.3;
+    }
 }
 
 #controls {
     text-align: center;
+    margin: 25px auto 0;
 }
