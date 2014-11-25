@@ -112,8 +112,10 @@ var BLUELIPS = {
         this.emotionData = this.ec.getBlank();
     },
 
-    updateData: function(er) {
-        console.log(er[0]);
+    updateData: function(data) {
+        for (var i = 0; i < data.length; i++) {
+            console.log(data[i]);
+        }
     }
 
 }
