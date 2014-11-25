@@ -18,7 +18,6 @@ var BLUELIPS = {
         this.overlayCC = this.overlay.getContext('2d');
 
         this.$startBtn = $('#start-button');
-        this.startBtn = this.$startBtn[0]
     },
 
     initPlugins: function() {
@@ -53,11 +52,9 @@ var BLUELIPS = {
                 }
                 context.vid.play();
             }, function() {
-                //insertAltVideo(vid);
                 alert("There was some problem trying to fetch video from your webcam. If you have a webcam, please make sure to accept when the browser asks for access to your webcam.");
             });
         } else {
-            //insertAltVideo(vid);
             alert("This demo depends on getUserMedia, which your browser does not seem to support. :(");
         }
 
@@ -88,12 +85,15 @@ var BLUELIPS = {
     drawLoop: function() {
         requestAnimFrame(this.drawLoop.bind(this));
         this.overlayCC.clearRect(0, 0, 400, 300);
-        if (this.ctrack.getCurrentPosition()) {
-            this.ctrack.draw(this.overlay);
-        }
-        var cp = this.ctrack.getCurrentParameters();
 
-        var er = this.ec.meanPredict(cp);
+        var cpos = this.ctrack.getCurrentPosition();
+        if (cpos) {
+            this.ctrack.draw(this.overlay);
+            this.updatePos(cpos);
+        }
+
+        var cparam = this.ctrack.getCurrentParameters();
+        var er = this.ec.meanPredict(cparam);
         if (er) {
             this.updateData(er);
         }
@@ -108,6 +108,12 @@ var BLUELIPS = {
     updateData: function(data) {
         for (var i = 0; i < data.length; i++) {
             // console.log(data[i]);
+        }
+    },
+
+    updatePos: function(positions) {
+        for (var i = 0; i < positions.length; i++) {
+            // console.log(positions[i]);
         }
     }
 
