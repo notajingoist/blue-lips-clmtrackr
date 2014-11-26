@@ -8,17 +8,43 @@ var BLUELIPS = {
         this.initEmotion();
         this.initd3();
 
-        this.expressions = {
-            '1.5': {
-                type: 'happy',
-                amount: 0.5
-            },
+        // this.expressions = {
+        //     blah: {
+        //         emotions: {
+        //             'angry': 0.8,
+        //             'happy': 0.4,
+        //             'sad': 0.1,
+        //             'surprised': 0.5
+        //         },
+        //         phrase: 'imagine you\'re on a beach.',
+        //         image: '/images/blah.png'
+        //     }
+        // };
 
-            '3.0': {
-                type: 'surprised',
-                amount: 0.6
-            }
-        };
+
+        // this.data = {
+        //     src: '/audio/blah.mp3',
+        //     colors: {
+        //         '0.53': '#ff0',
+        //         '1.24': '#fff'
+        //     },
+        //     expressions: {
+        //         '0.8': blah,
+        //         '1.8': blah
+        //     }
+        // };
+
+        // this.expressions = {
+        //     '1.5': {
+        //         type: 'happy',
+        //         amount: 0.5
+        //     },
+
+        //     '3.0': {
+        //         type: 'surprised',
+        //         amount: 0.6
+        //     }
+        // };
     },
 
     initVars: function() {
@@ -39,6 +65,38 @@ var BLUELIPS = {
 
     bindEventHandlers: function() {
         this.$startBtn.on('click', this.startVideo.bind(this));
+    },
+
+    initAudio: function() {
+        this.audio = document.getElementById('myAudio');
+        console.log(this.audio);
+        var context = this;
+        this.audio.ontimeupdate = function() {
+            context.audioPositionChanged()
+        };
+
+        this.audioPos = 0;
+
+        this.audio.onended = function() {
+            document.body.style.backgroundColor = 'white';
+        };
+
+    },
+
+    // get position of the audio
+    // change the background color of the document based off the position
+    audioPositionChanged: function() {
+        // Display the current position of the video in a p element with id="demo"
+        this.audioPos = this.audio.currentTime
+        console.log(this.audioPos);
+        this.colorChange('red', 1);
+        this.colorChange('blue', 2);
+    },
+
+    colorChange: function(color, position) {
+        if (this.audioPos > position){
+            document.body.style.backgroundColor = color;
+        }
     },
 
     setupVideo: function() {
@@ -85,6 +143,9 @@ var BLUELIPS = {
     },
 
     startVideo: function() {
+        //start audio
+        this.initAudio();
+
         //start video
         this.vid.play();
 

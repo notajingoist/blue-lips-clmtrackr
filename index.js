@@ -11,6 +11,12 @@ app.get('/', function(req, res) {
     });
 });
 
+app.get('/expression-maker', function(req, res) {
+    res.render('expression-maker', {
+        title: 'expression maker'
+    });
+});
+
 var server = app.listen(8000, function() {
     var host = server.address().address;
     var port = server.address().port;

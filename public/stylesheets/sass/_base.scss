@@ -60,6 +60,11 @@ input, select, textarea, button {
     display: none;
 }
 
+.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
 .bold {
     font-weight: bold;
 }
