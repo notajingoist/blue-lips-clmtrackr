@@ -11,6 +11,12 @@ app.get('/', function(req, res) {
     });
 });
 
+app.get('/the-ball', function(req, res) {
+    res.render('the-ball', {
+        title: 'the ball'
+    });
+});
+
 app.get('/expression-maker', function(req, res) {
     res.render('expression-maker', {
         title: 'expression maker'

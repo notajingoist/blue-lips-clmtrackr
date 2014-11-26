@@ -1,4 +1,4 @@
-var BLUELIPS = {
+var BLUELIPS = $.extend(true, {
     init: function() {
         this.initVars();
         this.initPlugins();
@@ -7,44 +7,8 @@ var BLUELIPS = {
         this.initClm();
         this.initEmotion();
         this.initd3();
-
-        // this.expressions = {
-        //     blah: {
-        //         emotions: {
-        //             'angry': 0.8,
-        //             'happy': 0.4,
-        //             'sad': 0.1,
-        //             'surprised': 0.5
-        //         },
-        //         phrase: 'imagine you\'re on a beach.',
-        //         image: '/images/blah.png'
-        //     }
-        // };
-
-
-        // this.data = {
-        //     src: '/audio/blah.mp3',
-        //     colors: {
-        //         '0.53': '#ff0',
-        //         '1.24': '#fff'
-        //     },
-        //     expressions: {
-        //         '0.8': blah,
-        //         '1.8': blah
-        //     }
-        // };
-
-        // this.expressions = {
-        //     '1.5': {
-        //         type: 'happy',
-        //         amount: 0.5
-        //     },
-
-        //     '3.0': {
-        //         type: 'surprised',
-        //         amount: 0.6
-        //     }
-        // };
+        this.data = data;
+        console.log(this.data);
     },
 
     initVars: function() {
@@ -70,7 +34,7 @@ var BLUELIPS = {
     initAudio: function() {
         this.audio = document.getElementById('myAudio');
         this.audio.play();
-        console.log(this.audio);
+        // console.log(this.audio);
         var context = this;
         this.audio.ontimeupdate = function() {
             context.audioPositionChanged()
@@ -89,7 +53,7 @@ var BLUELIPS = {
     audioPositionChanged: function() {
         // Display the current position of the video in a p element with id="demo"
         this.audioPos = this.audio.currentTime
-        console.log(this.audioPos);
+        // console.log(this.audioPos);
         this.colorChange('red', 1);
         this.colorChange('blue', 2);
     },
@@ -277,6 +241,6 @@ var BLUELIPS = {
             attr("class", "yAxis");
     }
 
-}
+}, window.BLUELIPS || (window.BLUELIPS = {}));
 
 BLUELIPS.init();
