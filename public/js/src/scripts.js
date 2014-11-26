@@ -69,6 +69,7 @@ var BLUELIPS = {
 
     initAudio: function() {
         this.audio = document.getElementById('myAudio');
+        this.audio.play();
         console.log(this.audio);
         var context = this;
         this.audio.ontimeupdate = function() {
