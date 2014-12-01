@@ -13,8 +13,6 @@ gulp.task('sass', function() {
     return gulp.src(files)
         .pipe(sass({
             compass: true,
-            // bundleExec: true,
-            // sourcemap: true,
             sourcemapPath: '../sass',
             style: 'compressed'
         }))
