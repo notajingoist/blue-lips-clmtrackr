@@ -13,7 +13,8 @@ app.get('/', function(req, res) {
 
 app.get('/instructions', function(req, res) {
     res.render('instructions', {
-        title: 'instructions'
+        title: 'instructions',
+        story: '/the-ball'
     });
 });
 

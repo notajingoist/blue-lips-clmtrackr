@@ -3,6 +3,9 @@ block content
     div.score.
         100.00
     div.panel.panel-story
+        div.back
+            a(href='/instructions').
+                ←
         div.media
             block audio
             video.media-video.hidden(id='video-el', width='400', height='300', preload='auto', loop)
@@ -11,7 +14,7 @@ block content
         p.phrase.
             imagine that you're on a beach
         div.controls
-            input.btn(id='start-button', type='button', value='wait, loading video', disabled='disabled')
+            input.btn(id='start-button', type='button', value='loading...', disabled='disabled')
 block scripts
     include vendor-scripts
     block data

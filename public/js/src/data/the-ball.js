@@ -52,7 +52,7 @@ var expressions = {
 };
 
 var data = {
-    audio: '/audio/the_ball.mp3',
+    audio: '/audio/the-ball.mp3',
     colors: {
         '2.53': '#ff0',
         '4.24': '#0f0',
