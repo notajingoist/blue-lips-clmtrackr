@@ -12,6 +12,37 @@
     padding: 50px 0;
 }
 
+.back {
+    @include transition(opacity 0.2s ease-in-out 0);
+    position: absolute;
+    left: 20px;
+    top: 15px;
+    a {
+        color: #999;
+        font-size: 20px;
+        &:hover {
+            cursor: pointer;
+            opacity: 0.3;
+        }
+    }
+}
+
+.score {
+    position: absolute;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    right: 15px;
+    top: 10px;
+    display: block;
+    background: #fff;
+    color: #999;
+    width: 80px;
+    height: 30px;
+    text-align: center;
+    line-height: 1.7;
+    font-size: 16px;
+}
+
 .phrase {
     font-size: 13px;
     color: #999;
