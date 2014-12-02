@@ -3,44 +3,93 @@
     height: 100%;
     padding: 0;
     margin: 0 auto;
+    background: #eee;
     // overflow: hidden;
 }
 
 .main-content {
     margin: 0 auto;
     padding: 50px 0;
-    max-width: 600px;
 }
 
 .phrase {
     font-size: 13px;
     color: #999;
-    margin: 20px auto;
+    margin: 15px auto;
+    // margin: 20px auto;
     width: 250px;
-    // background-color: red;
     display: block;
     font-style: italic;
     line-height: 1.4;
 }
 
+
+.text {
+    font-size: 15px;
+    color: #999;
+    display: block;
+    line-height: 1.4;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+
+
+    &.text-welcome {
+        bottom: 127px;
+        width: 300px;
+        // margin: 100px auto 30px;
+    }
+
+    &.text-instructions {
+        bottom: 110px;
+        width: 475px;
+        p {
+            &:not(:first-child) {
+                margin-top: 15px;
+            }
+        }
+    }
+}
+
 .panel {
-    background: #fff;
+    background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 2px;
     text-align: center;
     margin: 0 auto;
-    width: 100%;
-    padding: 40px;
+    width: 650px;
+    height: 480px;
+    position: relative;
+
+    &.panel-story {
+        padding: 40px;
+    }
+
+    .info {
+        width: 100%;
+        height: 100%;
+    }
+
+    .welcome {
+        background: url('../../images/screens/welcome.png') center 25px no-repeat;
+        background-size: 475px auto;
+    }
+
+    .instructions {
+        background: url('../../images/screens/instructions.gif') center 0 no-repeat;
+        background-size: 175px auto;
+    }
 }
 
-#container {
+.media {
+    // background: #fff url('../../images/sample.png') center 30% no-repeat;
+    // background-size: 225px auto;
+    width: 400px;
+    height: 300px;
+    margin: 0 auto;
     position: relative;
     width: 370px;
-    &.story {
-        width: 400px;
-        height: 300px;
-        margin: 0 auto;
-    }
 }
 
 #overlay {
@@ -53,7 +102,7 @@
     width : 600px;
     height : 450px;
 
-    &.story {
+    &.media-canvas {
         width: 100%;
         height: 100%;
     }
@@ -66,14 +115,17 @@
     width : 600px;
     height : 450px;
 
-    &.story {
+    &.media-video {
         width: 100%;
         height: 100%;
     }
 }
 
-#sketch {
+.hidden-canvas {
     display: none;
+}
+
+#sketch {
 }
 
 .btn {
@@ -91,9 +143,13 @@
     }
 }
 
-#controls {
+.controls {
     text-align: center;
-    margin: 25px auto 0;
+    margin: 0 auto;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 45px;
 }
 
 #icon1, #icon2, #icon3, #icon4, #icon5, #icon6 {
