@@ -45,9 +45,9 @@
 .phrase {
     font-size: 13px;
     color: #999;
-    margin: 15px auto;
+    margin: 10px auto;
     // margin: 20px auto;
-    width: 250px;
+    width: 475px;
     display: block;
     font-style: italic;
     line-height: 1.4;
@@ -113,6 +113,7 @@
 }
 
 .media {
+    // @include transition(background 0.2s ease-in-out 0);
     // background: #fff url('../../images/sample.png') center 30% no-repeat;
     // background-size: 225px auto;
     width: 400px;

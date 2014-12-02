@@ -19,6 +19,7 @@ var BLUELIPS = $.extend(true, {
 
     initVars: function() {
         // this.$container = $('.container');
+        this.$phrase = $('.phrase');
         this.$media = $('.media');
         this.$body = $('body');
         this.$vid = $('#video-el');
@@ -57,39 +58,64 @@ var BLUELIPS = $.extend(true, {
     audioPositionChanged: function(e) {
         // Display the current position of the video in a p element with id="demo"
         this.audioPos = this.audio.currentTime;
+        this.currColor = '';
+        this.currImage = '';
+        this.currPhrase = '';
         // console.log(this.audioPos);
 
         // if (this.audio.currentTime > this.data)
 
-        for (t in this.colors) {
-            this.changeBackgroundColor('#' + this.colors[t], parseFloat(t));
+        var colors = $.extend(true, {}, this.colors);
+        var expressions = $.extend(true, {}, this.expressions);
+
+        for (t in colors) {
+            if (this.changeBackgroundColor('#' + colors[t], parseFloat(t))) {
+                delete colors[t];
+            }
         }
 
-        var yawn = this.expressions['0.0'];
-        this.changeExpression(yawn.image, 0);
-
-        for (t in this.expressions) {
-            var expression = this.expressions[t];
-            this.changeExpression(expression.image, parseFloat(t));
+        for (t in expressions) {
+            var expression = expressions[t];
+            if (this.changeExpression(expression.image, expression.phrase, parseFloat(t))) {
+                delete expressions[t];
+            }
         }
+
+        console.log(Object.keys(this.expressions).length);
 
         // this.changeBackgroundColor('red', 1);
         // this.changeBackgroundColor('blue', 2);
     },
 
-    changeExpression: function(imageSrc, timePos) {
+    changeExpression: function(imageSrc, phrase, timePos) {
         if (this.audioPos > timePos) {
-            console.log('changing expression');
-            this.$media.css({
-                'background': 'url("' + imageSrc + '") center 30% no-repeat',
-                'background-size': '250px auto'
-            });
+            if (imageSrc !== this.currImage) {
+                this.$media.css({
+                    'background': 'url("' + imageSrc + '") center 25% no-repeat',
+                    'background-size': '250px auto'
+                });
+                this.currImage = imageSrc;
+            }
+
+            if (phrase !== this.currPhrase) {
+                this.$phrase.html(phrase);
+                this.currPhrase = phrase;
+            }
+            return true;
+        } else {
+            return false;
         }
     },
 
     changeBackgroundColor: function(color, timePos) {
         if (this.audioPos > timePos) {
-            this.$body.css('background-color', color);
+            if (color !== this.currColor) {
+                this.$body.css('background-color', color);
+                this.currColor = color;
+            }
+            return true;
+        } else {
+            return false;
         }
     },
 
