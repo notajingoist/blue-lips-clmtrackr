@@ -8,6 +8,7 @@ html {
 }
 
 body {
+    @include transition(background-color 0.2s ease-in-out 0);
     // margin: 0 auto;
     // width: 100%;
     // position: relative;
@@ -16,6 +17,7 @@ body {
     color: #000;
     line-height: 1.2;
     letter-spacing: 1px;
+    background-color: #eee;
 }
 
 a {

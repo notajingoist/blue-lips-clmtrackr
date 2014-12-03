@@ -48,7 +48,7 @@ var expressions = {
         },
         phrase: 'Imagine that you\'re entertaining a small child.',
         image: '/images/perform2.png'
-    }
+    },
     neutralOpenMouth: {
         emotions: {
             angry: 0.410222,
@@ -58,7 +58,7 @@ var expressions = {
         },
         phrase: '+++ make a noise for bonus points +++',
         image: '/images/neutralOpenMouth.png'
-    }
+    },
     surprise: {
         emotions: {
             angry: 0.0772,
@@ -72,11 +72,11 @@ var expressions = {
 };
 
 var data = {
-    audio: '/audio/the_ball.mp3',
+    audio: '/audio/the-ball.mp3',
     colors: {
     	//I was tired and didn't want to go out.
     	//dull grey?
-    	'0.0':"f4e8cd"
+    	'0.0':"f4e8cd",
     	// I know how to look alert
     	// when You can't speak you have to look full of energy.
     	//brighten up- on second thought, don't change
@@ -86,17 +86,16 @@ var data = {
     	//do change on the word "entered"
     	//'13.0':""
     	// fade from grey/blue to white
-    	'15.0':"a1acb9"
-    	'15.5':"adb8c7"
-    	'16.0':"b6c2d0"
-    	'16.5':"bfcbdb"
-    	'17.0':"cad7e7"
-    	'17.5':"d3e0f1"
-    	'18.0':"deebfb"
-    	'18.5':"e8f0fb"
-    	'19.0':"f1f4f9"
-    	'19.5':"ffffff"
-    	''
+    	'15.0':"a1acb9",
+    	'15.5':"adb8c7",
+    	'16.0':"b6c2d0",
+    	'16.5':"bfcbdb",
+    	'17.0':"cad7e7",
+    	'17.5':"d3e0f1",
+    	'18.0':"deebfb",
+    	'18.5':"e8f0fb",
+    	'19.0':"f1f4f9",
+    	'19.5':"ffffff",
     	//“When I entered the cocktail party I immediately began my usual routine.”
     	// flashy lights
     	'20.0':"ffffff",
@@ -127,12 +126,12 @@ var data = {
     	'0.0':expressions.yawn,
     	// I know how to look alert
     	// when You can't speak you have to look full of energy.
-    	//neutral 
+    	//neutral
     	//raise eyebrows like that sikh trying to stay awake in class
     	'6.0':expressions.neutral,
     	'6.0':expressions.awake,
     	// I only felt truly awake as I entered through the back way of the giant house into the brightly lit kitchen.”
-    	//neutral 
+    	//neutral
     	'13.0':expressions.neutral,
     	'13.0':expressions.awake,
     	//“When I entered the cocktail party I immediately began my usual routine.”
@@ -142,7 +141,7 @@ var data = {
     	'27.0':expressions.perform2,
     	'29.0':expressions.perform1,
     	'31.0':expressions.perform2,
-    	//“after an hour or so I slipped into the large study for my fifteen minute break. I felt strangely detached. 
+    	//“after an hour or so I slipped into the large study for my fifteen minute break. I felt strangely detached.
     	//neutral
     	'32.0':expressions.neutral,
     	//I let out a little sound to remind myself I could speak.”

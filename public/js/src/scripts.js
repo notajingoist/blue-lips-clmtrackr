@@ -7,19 +7,30 @@ var BLUELIPS = $.extend(true, {
         this.initClm();
         this.initEmotion();
         this.data = data;
-        console.log(this.data);
+
+        this.colors = this.data.colors;
+        this.audioSrc = this.data.audio;
+        this.expressions = this.data.expressions;
+
+        this.mediaStarted = false;
+
+        // console.log(this.data);
     },
 
     initVars: function() {
+        // this.$container = $('.container');
+        this.$phrase = $('.phrase');
+        this.$media = $('.media');
+        this.$body = $('body');
         this.$vid = $('#video-el');
         this.vid = this.$vid[0];
-
         this.$overlay = $('#overlay');
         this.overlay = this.$overlay[0];
-
         this.overlayCC = this.overlay.getContext('2d');
-
         this.$startBtn = $('#start-button');
+
+        this.$audio = $('#audio-src');
+        this.audio = this.$audio[0];
     },
 
     initPlugins: function() {
@@ -27,39 +38,84 @@ var BLUELIPS = $.extend(true, {
     },
 
     bindEventHandlers: function() {
-        this.$startBtn.on('click', this.startVideo.bind(this));
+        this.$startBtn.on('click', this.startMedia.bind(this));
+        this.$audio.on('timeupdate', this.audioPositionChanged.bind(this));
+        this.$audio.on('ended', this.resetBackgroundColor.bind(this));
+    },
+
+    resetBackgroundColor: function(e) {
+        this.$body.css('background-color', '#eee');
     },
 
     initAudio: function() {
-        this.audio = document.getElementById('myAudio');
+        this.$audio.attr('src', this.audioSrc);
         this.audio.play();
-        // console.log(this.audio);
-        var context = this;
-        this.audio.ontimeupdate = function() {
-            context.audioPositionChanged()
-        };
-
         this.audioPos = 0;
-
-        this.audio.onended = function() {
-            document.body.style.backgroundColor = 'white';
-        };
-
     },
 
     // get position of the audio
     // change the background color of the document based off the position
-    audioPositionChanged: function() {
+    audioPositionChanged: function(e) {
         // Display the current position of the video in a p element with id="demo"
-        this.audioPos = this.audio.currentTime
+        this.audioPos = this.audio.currentTime;
+        this.currColor = '';
+        this.currImage = '';
+        this.currPhrase = '';
         // console.log(this.audioPos);
-        this.colorChange('red', 1);
-        this.colorChange('blue', 2);
+
+        // if (this.audio.currentTime > this.data)
+
+        var colors = $.extend(true, {}, this.colors);
+        var expressions = $.extend(true, {}, this.expressions);
+
+        for (t in colors) {
+            if (this.changeBackgroundColor('#' + colors[t], parseFloat(t))) {
+                delete colors[t];
+            }
+        }
+
+        for (t in expressions) {
+            var expression = expressions[t];
+            if (this.changeExpression(expression.image, expression.phrase, parseFloat(t))) {
+                delete expressions[t];
+            }
+        }
+
+        console.log(Object.keys(this.expressions).length);
+
+        // this.changeBackgroundColor('red', 1);
+        // this.changeBackgroundColor('blue', 2);
     },
 
-    colorChange: function(color, position) {
-        if (this.audioPos > position){
-            document.body.style.backgroundColor = color;
+    changeExpression: function(imageSrc, phrase, timePos) {
+        if (this.audioPos > timePos) {
+            if (imageSrc !== this.currImage) {
+                this.$media.css({
+                    'background': 'url("' + imageSrc + '") center 25% no-repeat',
+                    'background-size': '250px auto'
+                });
+                this.currImage = imageSrc;
+            }
+
+            if (phrase !== this.currPhrase) {
+                this.$phrase.html(phrase);
+                this.currPhrase = phrase;
+            }
+            return true;
+        } else {
+            return false;
+        }
+    },
+
+    changeBackgroundColor: function(color, timePos) {
+        if (this.audioPos > timePos) {
+            if (color !== this.currColor) {
+                this.$body.css('background-color', color);
+                this.currColor = color;
+            }
+            return true;
+        } else {
+            return false;
         }
     },
 
@@ -106,18 +162,24 @@ var BLUELIPS = $.extend(true, {
         this.ctrack.init(pModel);
     },
 
-    startVideo: function() {
-        //start audio
-        this.initAudio();
+    startMedia: function(e) {
+        this.mediaStarted = !this.mediaStarted;
+        if (this.mediaStarted) {
+            this.$startBtn.attr('value', 'stop');
+            //start audio
+            this.initAudio();
 
-        //start video
-        this.vid.play();
+            //start video
+            this.vid.play();
 
-        //start tracking
-        this.ctrack.start(this.vid);
+            //start tracking
+            this.ctrack.start(this.vid);
 
-        //start loop to draw face
-        this.drawLoop();
+            //start loop to draw face
+            this.drawLoop();
+        } else {
+            this.$startBtn.attr('value', 'start');
+        }
     },
 
     drawLoop: function() {
@@ -148,7 +210,7 @@ var BLUELIPS = $.extend(true, {
             var emotion = data[i].emotion;
             var value = data[i].value;
 
-            console.log(emotion + ': ' + value);
+            // console.log(emotion + ': ' + value);
         }
     },
 

@@ -6,8 +6,15 @@ app.set('view engine', 'jade');
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(req, res) {
-    res.render('index', {
-        title: 'blue lips'
+    res.render('welcome', {
+        title: 'welcome'
+    });
+});
+
+app.get('/instructions', function(req, res) {
+    res.render('instructions', {
+        title: 'instructions',
+        story: '/the-ball'
     });
 });
 
@@ -16,6 +23,15 @@ app.get('/the-ball', function(req, res) {
         title: 'the ball'
     });
 });
+
+
+
+app.get('/emotion-detector', function(req, res) {
+    res.render('emotion-detector', {
+        title: 'blue lips'
+    });
+});
+
 
 app.get('/expression-maker', function(req, res) {
     res.render('expression-maker', {
