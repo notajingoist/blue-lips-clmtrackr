@@ -1,11 +1,13 @@
 extend layout
 block content
     div.score.
-        100.00
+        0.000
     div.panel.panel-story
         div.back
             a(href='/instructions').
                 ←
+        div.text.text-story.
+            Allow your camera to be used to begin acting.
         div.media
             block audio
             video.media-video.hidden(id='video-el', width='400', height='300', preload='auto', loop)
@@ -13,7 +15,7 @@ block content
         canvas.hidden-canvas(id='sketch', width='400', height='300')
         p.phrase
         div.controls
-            input.btn(id='start-button', type='button', value='loading...', disabled='disabled')
+            input.hide.btn(id='proceed-button', type='button', value='loading...', disabled='disabled')
 block scripts
     include vendor-scripts
     block data

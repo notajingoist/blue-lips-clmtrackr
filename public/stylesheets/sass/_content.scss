@@ -45,7 +45,7 @@
 .phrase {
     font-size: 13px;
     color: #999;
-    margin: 10px auto;
+    margin: 10px auto; //20px
     // margin: 20px auto;
     width: 475px;
     display: block;
@@ -80,6 +80,24 @@
             }
         }
     }
+
+    &.text-grades {
+        top: 245px;
+        width: 475px;
+        h2 {
+            font-size: 48px;
+            font-weight: bold;
+        }
+    }
+
+    &.text-story {
+        bottom: 50%;
+        width: 100%;
+
+        &.hide {
+            display: none;
+        }
+    }
 }
 
 .panel {
@@ -109,6 +127,25 @@
     .instructions {
         background: url('../../images/screens/instructions.gif') center 0 no-repeat;
         background-size: 175px auto;
+    }
+
+    .grades {
+        &.A {
+            background: url('../../images/screens/A.gif') center 20px no-repeat;
+            background-size: 175px auto;
+        }
+        &.B {
+            background: url('../../images/screens/B.gif') center 20px no-repeat;
+            background-size: 175px auto;
+        }
+        &.C {
+            background: url('../../images/screens/C.gif') center 20px no-repeat;
+            background-size: 175px auto;
+        }
+        &.F {
+            background: url('../../images/screens/F.gif') center 20px no-repeat;
+            background-size: 175px auto;
+        }
     }
 }
 
