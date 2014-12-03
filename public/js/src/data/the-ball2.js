@@ -128,12 +128,12 @@ var data = {
     	// when You can't speak you have to look full of energy.
     	//neutral
     	//raise eyebrows like that sikh trying to stay awake in class
-    	'6.0':expressions.neutral,
-    	'6.0':expressions.awake,
+    	'5.0':expressions.neutral,
+    	'8.0':expressions.awake,
     	// I only felt truly awake as I entered through the back way of the giant house into the brightly lit kitchen.”
     	//neutral
     	'13.0':expressions.neutral,
-    	'13.0':expressions.awake,
+    	'15.0':expressions.awake,
     	//“When I entered the cocktail party I immediately began my usual routine.”
     	// big - small - big -small
     	'20.0':expressions.awake,
