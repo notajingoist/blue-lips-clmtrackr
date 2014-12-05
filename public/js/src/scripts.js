@@ -14,6 +14,7 @@ var BLUELIPS = $.extend(true, {
         this.$score = $('.score');
         this.$phrase = $('.phrase');
         this.$media = $('.media');
+        this.$face = $('.face');
         this.$body = $('body');
         this.$vid = $('#video-el');
         this.vid = this.$vid[0];
@@ -195,9 +196,8 @@ var BLUELIPS = $.extend(true, {
 
     changeExpression: function(imageSrc, phrase, emotions, timePos) {
         if (imageSrc !== this.currImage) {
-            this.$media.css({
-                'background': 'url("' + imageSrc + '") center 25% no-repeat',
-                'background-size': '250px auto'
+            this.$face.css({
+                'background': 'url("' + imageSrc + '") center 70px / 250px auto no-repeat'
             });
             this.currImage = imageSrc;
         }
