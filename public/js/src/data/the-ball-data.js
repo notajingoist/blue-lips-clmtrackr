@@ -6,6 +6,7 @@ var expressions = {
             surprised: 0.407,
             happy: 0.072
         },
+        templates: ['surprised', 'happy'],
         phrase: 'yawn. imagine a long day.',
         image: '/images/yawn.png'
     },
@@ -16,6 +17,7 @@ var expressions = {
             surprised: 0.1229,
             happy: 0.0148
         },
+        templates: [],
         phrase: 'Neutral. imagine writing an email.',
         image: '/images/neutral.png'
     },
@@ -26,6 +28,7 @@ var expressions = {
             surprised: 0.8269,
             happy: 0.0193167
         },
+        templates: ['sad', 'surprised'],
         phrase: 'Imagine that you just drank caffeine',
         image: '/images/awake.png'
     },
@@ -36,6 +39,7 @@ var expressions = {
             surprised: 0.00661,
             happy: 0.0003673
         },
+        templates: ['angry'],
         phrase: 'Imagine that you\'re entertaining a small child.',
         image: '/images/perform1.png'
     },
@@ -46,6 +50,7 @@ var expressions = {
             surprised: 0.358,
             happy: 0.801
         },
+        templates: ['happy'],
         phrase: 'Imagine that you\'re entertaining a small child.',
         image: '/images/perform2.png'
     },
@@ -56,6 +61,7 @@ var expressions = {
             surprised: 0.1151,
             happy: 0.0001
         },
+        templates: ['sad'],
         phrase: '+++ make a noise for bonus points +++',
         image: '/images/neutralOpenMouth.png'
     },
@@ -66,6 +72,7 @@ var expressions = {
             surprised: 0.05553,
             happy: 0.022
         },
+        templates: ['surprised'],
         phrase: 'Imagine that you just saw a pink elephant!!',
         image: '/images/surprise.png'
     }

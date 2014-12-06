@@ -39,6 +39,7 @@ var BLUELIPS = $.extend(true, {
             surprised: 1.0,
             happy: 1.0
         };
+        this.currTargetTemplates = [];
         this.currColor = '';
         this.currImage = '';
         this.currPhrase = '';
@@ -186,7 +187,7 @@ var BLUELIPS = $.extend(true, {
     updateFeedback: function() {
         var newFeedback;
 
-        if (this.score > 70) {
+        if (this.score > 75) {
             newFeedback = 'good';
         } else {
             newFeedback = 'ok';
@@ -228,7 +229,7 @@ var BLUELIPS = $.extend(true, {
 
         for (expTime in this.expressions) {
             if (this.audioPos > expTime) {
-                this.changeExpression(this.expressions[expTime].image, this.expressions[expTime].phrase, this.expressions[expTime].emotions, parseFloat(expTime));
+                this.changeExpression(this.expressions[expTime].image, this.expressions[expTime].phrase, this.expressions[expTime].emotions, this.expressions[expTime].templates, parseFloat(expTime));
             }
         }
     },
@@ -251,7 +252,7 @@ var BLUELIPS = $.extend(true, {
         }
     },
 
-    changeExpression: function(imageSrc, phrase, emotions, timePos) {
+    changeExpression: function(imageSrc, phrase, emotions, templates, timePos) {
         if (imageSrc !== this.currImage) {
             this.$face.css({
                 'background': 'url("' + imageSrc + '") center 70px / 250px auto no-repeat'
@@ -268,6 +269,8 @@ var BLUELIPS = $.extend(true, {
             this.currTargetEmotions = $.extend(true, {}, emotions);
             // console.log(this.currTargetEmotions);
         }
+
+        this.currTargetTemplates = templates;
 
     },
 
@@ -371,7 +374,45 @@ var BLUELIPS = $.extend(true, {
     },
 
     updateScore: function(data) {
-        for (var i = 0; i < data.length; i++) {
+        // var d
+        // var emotions = data.forEach(function(d, i, arr) {
+
+        // }.bind(this));
+
+        // console.log(this.currTargetTemplates);
+        var emotionScores = [];
+        for (var i = 0; i < data.length; i ++) {
+            var emotion = data[i].emotion;
+            var value = parseFloat(data[i].value);
+            var emotionScore;
+            var isTemplate = false;
+            for (var j = 0; j < this.currTargetTemplates.length; j++) {
+                var template = this.currTargetTemplates[j];
+                if (emotion === template) {
+                    isTemplate = true;
+                    // console.log(isTemplate);
+                }
+            }
+
+            if (isTemplate) {
+                emotionScore = (value >= 0.5) ? 100 : 0;
+            } else {
+                emotionScore = (value < 0.5) ? 100 : 0;
+            }
+
+            emotionScores.push(emotionScore);
+        }
+
+        var emotionScoreAvg = 0;
+        for (var i = 0; i < emotionScores.length; i++) {
+            emotionScoreAvg += emotionScores[i];
+        }
+
+        emotionScoreAvg = emotionScoreAvg/4;
+
+        this.score = emotionScoreAvg.toFixed(3);
+
+        /*for (var i = 0; i < data.length; i++) {
             var emotion = data[i].emotion;
             var value = parseFloat(data[i].value);
 
@@ -386,8 +427,21 @@ var BLUELIPS = $.extend(true, {
                 + this.emotionDelta.happy) / 4.0;
 
             var newScore = (1.0 - avg) * 100.0;
+
+
+            for (var i = 0; i < this.currTargetTemplates.length; i++) {
+                if (emotion === this.currTargetTemplates[i]) {
+                    if (value > 0.5) {
+
+                    } else {
+
+                    }
+                }
+            }
+
+
             this.score = newScore.toFixed(3);
-        }
+        }*/
     },
 
     updatePos: function(positions) {
