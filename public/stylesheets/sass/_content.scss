@@ -43,14 +43,15 @@
 }
 
 .phrase {
-    font-size: 13px;
+    @extend %center-element-horiz;
+    font-size: 15px;
     color: #999;
-    margin: 10px auto;
-    // margin: 20px auto;
+    top: 120px;
     width: 475px;
     display: block;
     font-style: italic;
     line-height: 1.4;
+    z-index: 2;
 }
 
 
@@ -78,6 +79,24 @@
             &:not(:first-child) {
                 margin-top: 15px;
             }
+        }
+    }
+
+    &.text-grades {
+        top: 245px;
+        width: 475px;
+        h2 {
+            font-size: 48px;
+            font-weight: bold;
+        }
+    }
+
+    &.text-story {
+        bottom: 50%;
+        width: 100%;
+
+        &.hide {
+            display: none;
         }
     }
 }
@@ -110,17 +129,38 @@
         background: url('../../images/screens/instructions.gif') center 0 no-repeat;
         background-size: 175px auto;
     }
+
+    .grades {
+        &.A {
+            background: url('../../images/screens/A.gif') center 20px no-repeat;
+            background-size: 175px auto;
+        }
+        &.B {
+            background: url('../../images/screens/B.gif') center 20px no-repeat;
+            background-size: 175px auto;
+        }
+        &.C {
+            background: url('../../images/screens/C.gif') center 20px no-repeat;
+            background-size: 175px auto;
+        }
+        &.F {
+            background: url('../../images/screens/F.gif') center 20px no-repeat;
+            background-size: 175px auto;
+        }
+    }
 }
 
 .media {
-    // @include transition(background 0.2s ease-in-out 0);
-    // background: #fff url('../../images/sample.png') center 30% no-repeat;
-    // background-size: 225px auto;
-    width: 400px;
-    height: 300px;
+    width: 470px;
+    height: 400px;
     margin: 0 auto;
     position: relative;
-    width: 370px;
+}
+
+.face {
+    width: 100%;
+    height: 100%;
+    opacity: 0.4;
 }
 
 #overlay {

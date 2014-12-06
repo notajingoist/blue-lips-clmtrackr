@@ -6,31 +6,98 @@ var BLUELIPS = $.extend(true, {
         this.setupVideo();
         this.initClm();
         this.initEmotion();
-        this.data = data;
-
-        this.colors = this.data.colors;
-        this.audioSrc = this.data.audio;
-        this.expressions = this.data.expressions;
-
-        this.mediaStarted = false;
-
-        // console.log(this.data);
     },
 
     initVars: function() {
-        // this.$container = $('.container');
+        this.$content = $('.main-content');
+        this.$message = $('.text-story');
+        this.$score = $('.score');
         this.$phrase = $('.phrase');
         this.$media = $('.media');
+        this.$face = $('.face');
         this.$body = $('body');
         this.$vid = $('#video-el');
         this.vid = this.$vid[0];
         this.$overlay = $('#overlay');
         this.overlay = this.$overlay[0];
         this.overlayCC = this.overlay.getContext('2d');
-        this.$startBtn = $('#start-button');
+        this.$proceedBtn = $('#proceed-button');
 
         this.$audio = $('#audio-src');
         this.audio = this.$audio[0];
+
+        this.data = data;
+
+        this.colors = $.extend(true, {}, this.data.colors);
+        this.audioSrc = this.data.audio;
+        this.expressions = $.extend(true, {}, this.data.expressions);
+
+        this.currTargetEmotions = {
+            angry: 1.0,
+            sad: 1.0,
+            surprised: 1.0,
+            happy: 1.0
+        };
+        this.currColor = '';
+        this.currImage = '';
+        this.currPhrase = '';
+
+        this.emotionDelta = {
+            angry: 1.0,
+            sad: 1.0,
+            surprised: 1.0,
+            happy: 1.0
+        };
+
+        this.mediaStarted = false;
+
+        this.timer = null;
+        this.scoreArr = [];
+        this.score = 0.000;
+        this.finalScore = 0.000;
+
+        this.gradeInfo = {
+            APlus: {
+                grade: 'A+',
+                message: 'Good job actor. You can put that report card on the fridge!',
+                className: 'A'
+            },
+            A: {
+                grade: 'A',
+                message: 'Good job actor. You really stared at that computer.',
+                className: 'A'
+            },
+            AMinus: {
+                grade: 'A-',
+                message: 'Good job actor. If you weren\'t an overachiever you would have been happy right now.',
+                className: 'A'
+            },
+            BPlus: {
+                grade: 'B+',
+                message: 'You did it actor! After all a B+ is almost an A-...',
+                className: 'B'
+            },
+            B: {
+                grade: 'B',
+                message: 'You did it actor. How does it feel to be average?',
+                className: 'B'
+            },
+            BMinus: {
+                grade: 'B-',
+                message: 'You did it actor. You didn\'t get a C!',
+                className: 'B'
+            },
+            C: {
+                grade: 'C',
+                message: 'Well... This depends on your perspective! Some people believe that a C is average.',
+                className: 'C'
+            },
+            F: {
+                grade: 'F',
+                message: 'You have disappointed me. Please find a way of redeeming yourself.',
+                className: 'F'
+            }
+        };
     },
 
     initPlugins: function() {
@@ -38,12 +105,62 @@ var BLUELIPS = $.extend(true, {
     },
 
     bindEventHandlers: function() {
-        this.$startBtn.on('click', this.startMedia.bind(this));
+        this.$proceedBtn.on('click', this.goToGrades.bind(this));
         this.$audio.on('timeupdate', this.audioPositionChanged.bind(this));
-        this.$audio.on('ended', this.resetBackgroundColor.bind(this));
+        this.$audio.on('ended', this.handleEndScene.bind(this));
     },
 
-    resetBackgroundColor: function(e) {
+    getGradeInfo: function() {
+        if (this.finalScore > 90) {
+            return this.gradeInfo.APlus;
+        } else if (this.finalScore > 85) {
+            return this.gradeInfo.A;
+        } else if (this.finalScore > 80) {
+            return this.gradeInfo.AMinus;
+        } else if (this.finalScore > 75) {
+            return this.gradeInfo.BPlus;
+        } else if (this.finalScore > 70) {
+            return this.gradeInfo.B;
+        } else if (this.finalScore > 60) {
+            return this.gradeInfo.BMinus;
+        } else if (this.finalScore > 50) {
+            return this.gradeInfo.C;
+        } else {
+            return this.gradeInfo.F;
+        }
+    },
+
+    goToGrades: function(e) {
+        var storyName = 'the-ball';
+        var gradeInfo = this.getGradeInfo();
+        var message = gradeInfo.message;
+        var grade = gradeInfo.grade;
+        var className = gradeInfo.className;
+
+        var h2 = '<h2>' + grade + '</h2>';
+        var p = '<p>' + message + '</p>';
+        var text = '<div class="text text-grades">' + h2 + p + '</div>';
+        var button = '<input class="btn" id="retake-button" type="button" value="click to retake course">';
+        var link = '<a href="/' + storyName + '">' + button + '</a>';
+        var controls = '<div class="controls">' + link + '</div>';
+        var info = '<div class="info grades ' + className + '">' + text + controls + '</div>';
+        var panel = '<div class="panel">' + info + '</div>';
+
+        this.$content.html(panel);
+
+    },
+
+    handleEndScene: function(e) {
+        clearTimeout(this.timer);
+
+        var sum = this.scoreArr.reduce(function(a, b) { return parseFloat(a) + parseFloat(b) });
+        this.finalScore = this.scoreArr.length === 0 ? sum : (sum / this.scoreArr.length);
+
+        this.$proceedBtn.removeClass('hide');
+        this.resetBackgroundColor();
+    },
+
+    resetBackgroundColor: function() {
         this.$body.css('background-color', '#eee');
     },
 
@@ -53,69 +170,55 @@ var BLUELIPS = $.extend(true, {
         this.audioPos = 0;
     },
 
+    updateTimer: function() {
+        this.scoreArr.push(this.score);
+        this.$score.html(this.score);
+        this.timer = setTimeout(this.updateTimer.bind(this), 100);
+    },
+
     // get position of the audio
     // change the background color of the document based off the position
     audioPositionChanged: function(e) {
-        // Display the current position of the video in a p element with id="demo"
         this.audioPos = this.audio.currentTime;
-        this.currColor = '';
-        this.currImage = '';
-        this.currPhrase = '';
-        // console.log(this.audioPos);
 
-        // if (this.audio.currentTime > this.data)
-
-        var colors = $.extend(true, {}, this.colors);
-        var expressions = $.extend(true, {}, this.expressions);
-
-        for (t in colors) {
-            if (this.changeBackgroundColor('#' + colors[t], parseFloat(t))) {
-                delete colors[t];
+        for (colTime in this.colors) {
+            if (this.audioPos > colTime) {
+                this.changeBackgroundColor('#' + this.colors[colTime], parseFloat(colTime));
             }
         }
 
-        for (t in expressions) {
-            var expression = expressions[t];
-            if (this.changeExpression(expression.image, expression.phrase, parseFloat(t))) {
-                delete expressions[t];
+        for (expTime in this.expressions) {
+            if (this.audioPos > expTime) {
+                this.changeExpression(this.expressions[expTime].image, this.expressions[expTime].phrase, this.expressions[expTime].emotions, parseFloat(expTime));
             }
         }
-
-        console.log(Object.keys(this.expressions).length);
-
-        // this.changeBackgroundColor('red', 1);
-        // this.changeBackgroundColor('blue', 2);
     },
 
-    changeExpression: function(imageSrc, phrase, timePos) {
-        if (this.audioPos > timePos) {
-            if (imageSrc !== this.currImage) {
-                this.$media.css({
-                    'background': 'url("' + imageSrc + '") center 25% no-repeat',
-                    'background-size': '250px auto'
-                });
-                this.currImage = imageSrc;
-            }
-
-            if (phrase !== this.currPhrase) {
-                this.$phrase.html(phrase);
-                this.currPhrase = phrase;
-            }
-            return true;
-        } else {
-            return false;
+    changeExpression: function(imageSrc, phrase, emotions, timePos) {
+        if (imageSrc !== this.currImage) {
+            this.$face.css({
+                'background': 'url("' + imageSrc + '") center 70px / 250px auto no-repeat'
+            });
+            this.currImage = imageSrc;
         }
+
+        if (phrase !== this.currPhrase) {
+            this.$phrase.html(phrase);
+            this.currPhrase = phrase;
+        }
+
+        if (emotions !== undefined && Object.keys(emotions).length > 0) {
+            this.currTargetEmotions = $.extend(true, {}, emotions);
+            // console.log(this.currTargetEmotions);
+        }
+
     },
 
     changeBackgroundColor: function(color, timePos) {
-        if (this.audioPos > timePos) {
-            if (color !== this.currColor) {
-                this.$body.css('background-color', color);
-                this.currColor = color;
-            }
-            return true;
-        } else {
-            return false;
+        if (color !== this.currColor) {
+            this.$body.css('background-color', color);
+            this.currColor = color;
+            // console.log(this.currColor);
         }
     },
 
@@ -153,8 +256,11 @@ var BLUELIPS = $.extend(true, {
     },
 
     enableStart: function() {
-        this.$startBtn.attr('value', 'start');
-        this.$startBtn.attr('disabled', null);
+        this.$proceedBtn.attr('value', 'proceed');
+        this.$proceedBtn.attr('disabled', null);
+
+        this.$message.addClass('hide');
+        this.startMedia();
     },
 
     initClm: function() {
@@ -162,10 +268,9 @@ var BLUELIPS = $.extend(true, {
         this.ctrack.init(pModel);
     },
 
-    startMedia: function(e) {
+    startMedia: function() {
         this.mediaStarted = !this.mediaStarted;
         if (this.mediaStarted) {
-            this.$startBtn.attr('value', 'stop');
             //start audio
             this.initAudio();
 
@@ -177,8 +282,9 @@ var BLUELIPS = $.extend(true, {
 
             //start loop to draw face
             this.drawLoop();
-        } else {
-            this.$startBtn.attr('value', 'start');
+
+            //start scoring
+            this.updateTimer();
         }
     },
 
@@ -189,13 +295,13 @@ var BLUELIPS = $.extend(true, {
         var cpos = this.ctrack.getCurrentPosition();
         if (cpos) {
             this.ctrack.draw(this.overlay);
-            this.updatePos(cpos);
+            // this.updatePos(cpos);
         }
 
         var cparam = this.ctrack.getCurrentParameters();
         var er = this.ec.meanPredict(cparam);
         if (er) {
-            this.updateData(er);
+            this.updateScore(er);
         }
     },
 
@@ -205,12 +311,23 @@ var BLUELIPS = $.extend(true, {
         this.emotionData = this.ec.getBlank();
     },
 
-    updateData: function(data) {
+    updateScore: function(data) {
         for (var i = 0; i < data.length; i++) {
             var emotion = data[i].emotion;
-            var value = data[i].value;
+            var value = parseFloat(data[i].value);
 
-            // console.log(emotion + ': ' + value);
+            this.emotionDelta.angry = Math.abs(value - this.currTargetEmotions.angry);
+            this.emotionDelta.sad = Math.abs(value - this.currTargetEmotions.sad);
+            this.emotionDelta.surprised = Math.abs(value - this.currTargetEmotions.surprised);
+            this.emotionDelta.happy = Math.abs(value - this.currTargetEmotions.happy);
+
+            var avg = (this.emotionDelta.angry
+                + this.emotionDelta.sad
+                + this.emotionDelta.surprised
+                + this.emotionDelta.happy) / 4.0;
+
+            var newScore = (1.0 - avg) * 100.0;
+            this.score = newScore.toFixed(3);
         }
     },
 
