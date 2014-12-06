@@ -9,6 +9,7 @@ var BLUELIPS = $.extend(true, {
     },
 
     initVars: function() {
+        this.$feedback = $('.feedback');
         this.$content = $('.main-content');
         this.$message = $('.text-story');
         this.$score = $('.score');
@@ -52,6 +53,8 @@ var BLUELIPS = $.extend(true, {
         this.mediaStarted = false;
 
         this.timer = null;
+        this.feedbackTimer = null;
+        this.currentFeedback = null;
         this.scoreArr = [];
         this.score = 0.000;
         this.finalScore = 0.000;
@@ -152,11 +155,15 @@ var BLUELIPS = $.extend(true, {
 
     handleEndScene: function(e) {
         clearTimeout(this.timer);
+        clearTimeout(this.feedbackTimer);
 
         var sum = this.scoreArr.reduce(function(a, b) { return parseFloat(a) + parseFloat(b) });
         this.finalScore = this.scoreArr.length === 0 ? sum : (sum / this.scoreArr.length);
 
         this.$proceedBtn.removeClass('hide');
+        this.$feedback.css({
+            'background': 'none'
+        });
         this.resetBackgroundColor();
     },
 
@@ -176,6 +183,38 @@ var BLUELIPS = $.extend(true, {
         this.timer = setTimeout(this.updateTimer.bind(this), 100);
     },
 
+    updateFeedback: function() {
+        var newFeedback;
+
+        if (this.score > 70) {
+            newFeedback = 'good';
+        } else {
+            newFeedback = 'ok';
+        }
+
+        // if (this.score > 80) {
+        //     newFeedback = 'great';
+        // } else if (this.score > 70) {
+        //     newFeedback = 'good';
+        // } else if (this.score > 50) {
+        //     newFeedback = 'ok';
+        // } else {
+        //     newFeedback = 'bad';
+        // }
+
+        // if (this.currentFeedback !== newFeedback) {
+        //     console.log('changing gif');
+        //     this.setFeedback(newFeedback);
+        // } else {
+        //     this.setFeedback('ok');
+        // }
+
+        this.setFeedback(newFeedback);
+
+        this.currentFeedback = newFeedback;
+        this.feedbackTimer = setTimeout(this.updateFeedback.bind(this), 500);
+    },
+
     // get position of the audio
     // change the background color of the document based off the position
     audioPositionChanged: function(e) {
@@ -191,6 +230,24 @@ var BLUELIPS = $.extend(true, {
             if (this.audioPos > expTime) {
                 this.changeExpression(this.expressions[expTime].image, this.expressions[expTime].phrase, this.expressions[expTime].emotions, parseFloat(expTime));
             }
+        }
+    },
+
+    setFeedback: function(newFeedback) {
+        if (newFeedback === 'ok') {
+            this.$feedback.css({
+                'background': 'none'
+            });
+        } else {
+            this.$feedback.css({
+                'background': 'url("/images/screens/' + newFeedback + '.gif") center 90px / 320px auto no-repeat'
+            });
+
+            // setTimeout(function() {
+            //     this.$feedback.css({
+            //         'background': 'none'
+            //     });
+            // }.bind(this), 1500);
         }
     },
 
@@ -285,6 +342,8 @@ var BLUELIPS = $.extend(true, {
 
             //start scoring
             this.updateTimer();
+
+            setTimeout(this.updateFeedback.bind(this), 1000);
         }
     },
 
