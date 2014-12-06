@@ -115,19 +115,19 @@ var BLUELIPS = $.extend(true, {
     },
 
     getGradeInfo: function() {
-        if (this.finalScore > 90) {
+        if (this.finalScore > 75) {
             return this.gradeInfo.APlus;
-        } else if (this.finalScore > 85) {
+        } else if (this.finalScore > 65) {
             return this.gradeInfo.A;
-        } else if (this.finalScore > 80) {
+        } else if (this.finalScore > 55) {
             return this.gradeInfo.AMinus;
-        } else if (this.finalScore > 75) {
+        } else if (this.finalScore > 45) {
             return this.gradeInfo.BPlus;
-        } else if (this.finalScore > 70) {
+        } else if (this.finalScore > 35) {
             return this.gradeInfo.B;
-        } else if (this.finalScore > 60) {
+        } else if (this.finalScore > 30) {
             return this.gradeInfo.BMinus;
-        } else if (this.finalScore > 50) {
+        } else if (this.finalScore > 25) {
             return this.gradeInfo.C;
         } else {
             return this.gradeInfo.F;
@@ -160,6 +160,7 @@ var BLUELIPS = $.extend(true, {
 
         var sum = this.scoreArr.reduce(function(a, b) { return parseFloat(a) + parseFloat(b) });
         this.finalScore = this.scoreArr.length === 0 ? sum : (sum / this.scoreArr.length);
+        alert(this.finalScore);
 
         this.$proceedBtn.removeClass('hide');
         this.$feedback.css({
@@ -409,8 +410,9 @@ var BLUELIPS = $.extend(true, {
         }
 
         emotionScoreAvg = emotionScoreAvg/4;
+        var newScore = (emotionScoreAvg === 100) ? 100 : 0;
 
-        this.score = emotionScoreAvg.toFixed(3);
+        this.score = newScore.toFixed(3);
 
         /*for (var i = 0; i < data.length; i++) {
             var emotion = data[i].emotion;
