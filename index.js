@@ -20,14 +20,16 @@ app.get('/welcome/1', function(req, res) {
 });
 app.get('/instructions/1', function(req, res) {
     res.render('instructions', {
-        title: 'instructions-1',
-        storyLink: '/story/1'
+        title: 'instructions',
+        storyLink: '/story/1',
+        backLink: '/welcome/1'
     });
 });
 app.get('/story/1', function(req, res) {
     res.render('story', {
         title: 'story 1',
-        storyData: 'story-1'
+        storyData: 'story-1',
+        backLink: '/instructions/1'
     });
 });
 
@@ -35,42 +37,46 @@ app.get('/story/1', function(req, res) {
 //story 2
 app.get('/welcome/2', function(req, res) {
     res.render('welcome', {
-        title: 'welcome-2',
+        title: 'welcome',
         instructionsLink: '/instructions/2'
     });
 });
 app.get('/instructions/2', function(req, res) {
     res.render('instructions', {
-        title: 'instructions-2',
-        storyLink: '/story/2'
+        title: 'instructions',
+        storyLink: '/story/2',
+        backLink: '/welcome/2'
     });
 });
 app.get('/story/2', function(req, res) {
     res.render('story', {
         title: 'story 2',
-        storyData: 'story-2'
+        storyData: 'story-2',
+        backLink: '/instructions/1'
     });
 });
 
 //story 3
 app.get('/welcome/3', function(req, res) {
     res.render('welcome', {
-        title: 'welcome-3',
+        title: 'welcome',
         instructionsLink: '/instructions/3'
     });
 });
 
 app.get('/instructions/3', function(req, res) {
     res.render('instructions', {
-        title: 'instructions-3',
-        storyLink: '/story/3'
+        title: 'instructions',
+        storyLink: '/story/3',
+        backLink: '/welcome/3'
     });
 });
 
 app.get('/story/3', function(req, res) {
     res.render('story', {
         title: 'story 3',
-        storyData: 'story-3'
+        storyData: 'story-3',
+        backLink: '/instructions/3'
     });
 });
 
