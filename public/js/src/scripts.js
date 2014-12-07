@@ -196,7 +196,7 @@ var BLUELIPS = $.extend(true, {
         var len = this.scoreArr.length;
         var generalScore = ((greatScore * 100) + (goodScore * 75)) / len;
         this.finalScore = generalScore;
-        alert(this.finalScore);
+        console.log(this.finalScore);
         // alert(generalScore + ', ' + this.finalScore);
 
 
