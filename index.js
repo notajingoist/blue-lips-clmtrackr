@@ -6,6 +6,12 @@ app.set('view engine', 'jade');
 app.use(express.static(__dirname + '/public'));
 
 //story 1
+app.get('/', function(req, res) {
+    res.render('welcome', {
+        title: 'welcome',
+        instructionsLink: '/instructions/1'
+    });
+});
 app.get('/welcome/1', function(req, res) {
     res.render('welcome', {
         title: 'welcome',

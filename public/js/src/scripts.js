@@ -29,6 +29,7 @@ var BLUELIPS = $.extend(true, {
 
         this.data = data;
 
+        this.name = this.data.name;
         this.colors = $.extend(true, {}, this.data.colors);
         this.audioSrc = this.data.audio;
         this.expressions = $.extend(true, {}, this.data.expressions);
@@ -133,17 +134,17 @@ var BLUELIPS = $.extend(true, {
         //     return this.gradeInfo.F;
         // }
 
-        if (this.finalScore > 70) {
+        if (this.finalScore > 65) {
             return this.gradeInfo.APlus;
-        } else if (this.finalScore > 65) {
+        } else if (this.finalScore > 62.5) {
             return this.gradeInfo.A;
         } else if (this.finalScore > 60) {
             return this.gradeInfo.AMinus;
-        } else if (this.finalScore > 55) {
+        } else if (this.finalScore > 57) {
             return this.gradeInfo.BPlus;
-        } else if (this.finalScore > 50) {
+        } else if (this.finalScore > 53) {
             return this.gradeInfo.B;
-        } else if (this.finalScore > 45) {
+        } else if (this.finalScore > 50) {
             return this.gradeInfo.BMinus;
         } else if (this.finalScore > 40) {
             return this.gradeInfo.C;
@@ -153,7 +154,6 @@ var BLUELIPS = $.extend(true, {
     },
 
     goToGrades: function(e) {
-        var storyName = 'the-ball';
         var gradeInfo = this.getGradeInfo();
         var message = gradeInfo.message;
         var grade = gradeInfo.grade;
@@ -163,7 +163,7 @@ var BLUELIPS = $.extend(true, {
         var p = '<p>' + message + '</p>';
         var text = '<div class="text text-grades">' + h2 + p + '</div>';
         var button = '<input class="btn" id="retake-button" type="button" value="click to retake course">';
-        var link = '<a href="/' + storyName + '">' + button + '</a>';
+        var link = '<a href=' + this.name + '>' + button + '</a>';
         var controls = '<div class="controls">' + link + '</div>';
         var info = '<div class="info grades ' + className + '">' + text + controls + '</div>';
         var panel = '<div class="panel">' + info + '</div>';
