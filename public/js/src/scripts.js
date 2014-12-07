@@ -9,6 +9,7 @@ var BLUELIPS = $.extend(true, {
     },
 
     initVars: function() {
+        this.$feedback = $('.feedback');
         this.$content = $('.main-content');
         this.$message = $('.text-story');
         this.$score = $('.score');
@@ -28,6 +29,7 @@ var BLUELIPS = $.extend(true, {
 
         this.data = data;
 
+        this.name = this.data.name;
         this.colors = $.extend(true, {}, this.data.colors);
         this.audioSrc = this.data.audio;
         this.expressions = $.extend(true, {}, this.data.expressions);
@@ -38,6 +40,7 @@ var BLUELIPS = $.extend(true, {
             surprised: 1.0,
             happy: 1.0
         };
+        this.currTargetTemplates = [];
         this.currColor = '';
         this.currImage = '';
         this.currPhrase = '';
@@ -52,6 +55,8 @@ var BLUELIPS = $.extend(true, {
         this.mediaStarted = false;
 
         this.timer = null;
+        this.feedbackTimer = null;
+        this.currentFeedback = null;
         this.scoreArr = [];
         this.score = 0.000;
         this.finalScore = 0.000;
@@ -111,19 +116,37 @@ var BLUELIPS = $.extend(true, {
     },
 
     getGradeInfo: function() {
-        if (this.finalScore > 90) {
+        // if (this.finalScore > 90) {
+        //     return this.gradeInfo.APlus;
+        // } else if (this.finalScore > 85) {
+        //     return this.gradeInfo.A;
+        // } else if (this.finalScore > 80) {
+        //     return this.gradeInfo.AMinus;
+        // } else if (this.finalScore > 75) {
+        //     return this.gradeInfo.BPlus;
+        // } else if (this.finalScore > 70) {
+        //     return this.gradeInfo.B;
+        // } else if (this.finalScore > 60) {
+        //     return this.gradeInfo.BMinus;
+        // } else if (this.finalScore > 50) {
+        //     return this.gradeInfo.C;
+        // } else {
+        //     return this.gradeInfo.F;
+        // }
+
+        if (this.finalScore > 65) {
             return this.gradeInfo.APlus;
-        } else if (this.finalScore > 85) {
+        } else if (this.finalScore > 62.5) {
             return this.gradeInfo.A;
-        } else if (this.finalScore > 80) {
-            return this.gradeInfo.AMinus;
-        } else if (this.finalScore > 75) {
-            return this.gradeInfo.BPlus;
-        } else if (this.finalScore > 70) {
-            return this.gradeInfo.B;
         } else if (this.finalScore > 60) {
-            return this.gradeInfo.BMinus;
+            return this.gradeInfo.AMinus;
+        } else if (this.finalScore > 57) {
+            return this.gradeInfo.BPlus;
+        } else if (this.finalScore > 53) {
+            return this.gradeInfo.B;
         } else if (this.finalScore > 50) {
+            return this.gradeInfo.BMinus;
+        } else if (this.finalScore > 40) {
             return this.gradeInfo.C;
         } else {
             return this.gradeInfo.F;
@@ -131,7 +154,6 @@ var BLUELIPS = $.extend(true, {
     },
 
     goToGrades: function(e) {
-        var storyName = 'the-ball';
         var gradeInfo = this.getGradeInfo();
         var message = gradeInfo.message;
         var grade = gradeInfo.grade;
@@ -141,7 +163,7 @@ var BLUELIPS = $.extend(true, {
         var p = '<p>' + message + '</p>';
         var text = '<div class="text text-grades">' + h2 + p + '</div>';
         var button = '<input class="btn" id="retake-button" type="button" value="click to retake course">';
-        var link = '<a href="/' + storyName + '">' + button + '</a>';
+        var link = '<a href=' + this.name + '>' + button + '</a>';
         var controls = '<div class="controls">' + link + '</div>';
         var info = '<div class="info grades ' + className + '">' + text + controls + '</div>';
         var panel = '<div class="panel">' + info + '</div>';
@@ -152,11 +174,42 @@ var BLUELIPS = $.extend(true, {
 
     handleEndScene: function(e) {
         clearTimeout(this.timer);
+        clearTimeout(this.feedbackTimer);
 
         var sum = this.scoreArr.reduce(function(a, b) { return parseFloat(a) + parseFloat(b) });
         this.finalScore = this.scoreArr.length === 0 ? sum : (sum / this.scoreArr.length);
 
+        var greatScore = 0;
+        var goodScore = 0;
+        var okScore = 0;
+        for (var i = 0; i < this.scoreArr.length; i++) {
+            if (parseFloat(this.scoreArr[i]) >= 100) {
+                greatScore += 1;
+            } else if (parseFloat(this.scoreArr[i]) >= 75) {
+                goodScore += 1;
+            } else {
+                okScore += 1;
+            }
+        }
+
+
+        var len = this.scoreArr.length;
+        var generalScore = ((greatScore * 100) + (goodScore * 75)) / len;
+        this.finalScore = generalScore;
+        alert(this.finalScore);
+        // alert(generalScore + ', ' + this.finalScore);
+
+
+        // greatScore = greatScore / len;
+        // goodScore = goodScore / len;
+        // okScore = okScore / len;
+
+        // alert(greatScore + ', ' + goodScore + ', ' + okScore + ', ' + this.finalScore);
+
         this.$proceedBtn.removeClass('hide');
+        this.$feedback.css({
+            'background': 'none'
+        });
         this.resetBackgroundColor();
     },
 
@@ -176,6 +229,40 @@ var BLUELIPS = $.extend(true, {
         this.timer = setTimeout(this.updateTimer.bind(this), 100);
     },
 
+    updateFeedback: function() {
+        var newFeedback;
+
+        if (this.score >= 100) {
+            newFeedback = 'great';
+        } else if (this.score >= 75) {
+            newFeedback = 'good';
+        } else {
+            newFeedback = 'ok';
+        }
+
+        // if (this.score > 80) {
+        //     newFeedback = 'great';
+        // } else if (this.score > 70) {
+        //     newFeedback = 'good';
+        // } else if (this.score > 50) {
+        //     newFeedback = 'ok';
+        // } else {
+        //     newFeedback = 'bad';
+        // }
+
+        // if (this.currentFeedback !== newFeedback) {
+        //     console.log('changing gif');
+        //     this.setFeedback(newFeedback);
+        // } else {
+        //     this.setFeedback('ok');
+        // }
+
+        this.setFeedback(newFeedback);
+
+        this.currentFeedback = newFeedback;
+        this.feedbackTimer = setTimeout(this.updateFeedback.bind(this), 500);
+    },
+
     // get position of the audio
     // change the background color of the document based off the position
     audioPositionChanged: function(e) {
@@ -189,12 +276,30 @@ var BLUELIPS = $.extend(true, {
 
         for (expTime in this.expressions) {
             if (this.audioPos > expTime) {
-                this.changeExpression(this.expressions[expTime].image, this.expressions[expTime].phrase, this.expressions[expTime].emotions, parseFloat(expTime));
+                this.changeExpression(this.expressions[expTime].image, this.expressions[expTime].phrase, this.expressions[expTime].emotions, this.expressions[expTime].templates, parseFloat(expTime));
             }
         }
     },
 
-    changeExpression: function(imageSrc, phrase, emotions, timePos) {
+    setFeedback: function(newFeedback) {
+        if (newFeedback === 'ok') {
+            this.$feedback.css({
+                'background': 'none'
+            });
+        } else {
+            this.$feedback.css({
+                'background': 'url("/images/screens/' + newFeedback + '.gif") center 90px / 320px auto no-repeat'
+            });
+
+            // setTimeout(function() {
+            //     this.$feedback.css({
+            //         'background': 'none'
+            //     });
+            // }.bind(this), 1500);
+        }
+    },
+
+    changeExpression: function(imageSrc, phrase, emotions, templates, timePos) {
         if (imageSrc !== this.currImage) {
             this.$face.css({
                 'background': 'url("' + imageSrc + '") center 70px / 250px auto no-repeat'
@@ -211,6 +316,8 @@ var BLUELIPS = $.extend(true, {
             this.currTargetEmotions = $.extend(true, {}, emotions);
             // console.log(this.currTargetEmotions);
         }
+
+        this.currTargetTemplates = templates;
 
     },
 
@@ -285,6 +392,8 @@ var BLUELIPS = $.extend(true, {
 
             //start scoring
             this.updateTimer();
+
+            setTimeout(this.updateFeedback.bind(this), 1000);
         }
     },
 
@@ -312,7 +421,45 @@ var BLUELIPS = $.extend(true, {
     },
 
     updateScore: function(data) {
-        for (var i = 0; i < data.length; i++) {
+        // var d
+        // var emotions = data.forEach(function(d, i, arr) {
+
+        // }.bind(this));
+
+        // console.log(this.currTargetTemplates);
+        var emotionScores = [];
+        for (var i = 0; i < data.length; i ++) {
+            var emotion = data[i].emotion;
+            var value = parseFloat(data[i].value);
+            var emotionScore;
+            var isTemplate = false;
+            for (var j = 0; j < this.currTargetTemplates.length; j++) {
+                var template = this.currTargetTemplates[j];
+                if (emotion === template) {
+                    isTemplate = true;
+                    // console.log(isTemplate);
+                }
+            }
+
+            if (isTemplate) {
+                emotionScore = (value >= 0.5) ? 100 : 0;
+            } else {
+                emotionScore = (value < 0.5) ? 100 : 0;
+            }
+
+            emotionScores.push(emotionScore);
+        }
+
+        var emotionScoreAvg = 0;
+        for (var i = 0; i < emotionScores.length; i++) {
+            emotionScoreAvg += emotionScores[i];
+        }
+
+        emotionScoreAvg = emotionScoreAvg/4;
+
+        this.score = emotionScoreAvg.toFixed(3);
+
+        /*for (var i = 0; i < data.length; i++) {
             var emotion = data[i].emotion;
             var value = parseFloat(data[i].value);
 
@@ -327,8 +474,21 @@ var BLUELIPS = $.extend(true, {
                 + this.emotionDelta.happy) / 4.0;
 
             var newScore = (1.0 - avg) * 100.0;
+
+
+            for (var i = 0; i < this.currTargetTemplates.length; i++) {
+                if (emotion === this.currTargetTemplates[i]) {
+                    if (value > 0.5) {
+
+                    } else {
+
+                    }
+                }
+            }
+
+
             this.score = newScore.toFixed(3);
-        }
+        }*/
     },
 
     updatePos: function(positions) {
