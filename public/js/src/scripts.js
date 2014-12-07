@@ -161,6 +161,32 @@ var BLUELIPS = $.extend(true, {
         var sum = this.scoreArr.reduce(function(a, b) { return parseFloat(a) + parseFloat(b) });
         this.finalScore = this.scoreArr.length === 0 ? sum : (sum / this.scoreArr.length);
 
+        var greatScore = 0;
+        var goodScore = 0;
+        var okScore = 0;
+        for (var i = 0; i < this.scoreArr.length; i++) {
+            if (parseFloat(this.scoreArr[i]) >= 100) {
+                greatScore += 1;
+            } else if (parseFloat(this.scoreArr[i]) >= 75) {
+                goodScore += 1;
+            } else {
+                okScore += 1;
+            }
+        }
+
+        var len = this.scoreArr.length;
+        greatScore = greatScore / len;
+        goodScore = goodScore / len;
+        okScore = okScore / len;
+
+        alert(greatScore + ', ' + goodScore + ', ' + okScore + ', ' + this.finalScore);
+
+        if (greatScore >= goodScore && goodScore >= okScore) {
+            this.finalScore = 90;
+        } else if () {
+
+        }
+
         this.$proceedBtn.removeClass('hide');
         this.$feedback.css({
             'background': 'none'
@@ -187,7 +213,9 @@ var BLUELIPS = $.extend(true, {
     updateFeedback: function() {
         var newFeedback;
 
-        if (this.score > 75) {
+        if (this.score >= 100) {
+            newFeedback = 'great';
+        } else if (this.score >= 75) {
             newFeedback = 'good';
         } else {
             newFeedback = 'ok';
