@@ -115,19 +115,37 @@ var BLUELIPS = $.extend(true, {
     },
 
     getGradeInfo: function() {
-        if (this.finalScore > 90) {
+        // if (this.finalScore > 90) {
+        //     return this.gradeInfo.APlus;
+        // } else if (this.finalScore > 85) {
+        //     return this.gradeInfo.A;
+        // } else if (this.finalScore > 80) {
+        //     return this.gradeInfo.AMinus;
+        // } else if (this.finalScore > 75) {
+        //     return this.gradeInfo.BPlus;
+        // } else if (this.finalScore > 70) {
+        //     return this.gradeInfo.B;
+        // } else if (this.finalScore > 60) {
+        //     return this.gradeInfo.BMinus;
+        // } else if (this.finalScore > 50) {
+        //     return this.gradeInfo.C;
+        // } else {
+        //     return this.gradeInfo.F;
+        // }
+
+        if (this.finalScore > 70) {
             return this.gradeInfo.APlus;
-        } else if (this.finalScore > 85) {
+        } else if (this.finalScore > 65) {
             return this.gradeInfo.A;
-        } else if (this.finalScore > 80) {
-            return this.gradeInfo.AMinus;
-        } else if (this.finalScore > 75) {
-            return this.gradeInfo.BPlus;
-        } else if (this.finalScore > 70) {
-            return this.gradeInfo.B;
         } else if (this.finalScore > 60) {
-            return this.gradeInfo.BMinus;
+            return this.gradeInfo.AMinus;
+        } else if (this.finalScore > 55) {
+            return this.gradeInfo.BPlus;
         } else if (this.finalScore > 50) {
+            return this.gradeInfo.B;
+        } else if (this.finalScore > 45) {
+            return this.gradeInfo.BMinus;
+        } else if (this.finalScore > 40) {
             return this.gradeInfo.C;
         } else {
             return this.gradeInfo.F;
@@ -174,18 +192,19 @@ var BLUELIPS = $.extend(true, {
             }
         }
 
+
         var len = this.scoreArr.length;
-        greatScore = greatScore / len;
-        goodScore = goodScore / len;
-        okScore = okScore / len;
+        var generalScore = ((greatScore * 100) + (goodScore * 75)) / len;
+        this.finalScore = generalScore;
+        alert(this.finalScore);
+        // alert(generalScore + ', ' + this.finalScore);
 
-        alert(greatScore + ', ' + goodScore + ', ' + okScore + ', ' + this.finalScore);
 
-        if (greatScore >= goodScore && goodScore >= okScore) {
-            this.finalScore = 90;
-        } else if () {
+        // greatScore = greatScore / len;
+        // goodScore = goodScore / len;
+        // okScore = okScore / len;
 
-        }
+        // alert(greatScore + ', ' + goodScore + ', ' + okScore + ', ' + this.finalScore);
 
         this.$proceedBtn.removeClass('hide');
         this.$feedback.css({
