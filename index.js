@@ -102,3 +102,17 @@ var server = app.listen(process.env.PORT || 8000, function() {
 
     console.log('Listening at http://%s:%s', host, port);
 });
+
+var io = require('socket.io')(server);
+
+io.on('connection', function(socket) {
+    socket.emit('news', { hello: 'world' });
+
+    socket.on('my other event', function(data) {
+        console.log(data);
+    });
+
+    socket.on('disconnect', function() {
+        io.sockets.emit('user disconnected');
+    });
+});

@@ -20,5 +20,6 @@ block content
             input.hide.btn(id='proceed-button', type='button', value='loading...', disabled='disabled')
 block scripts
     include vendor-scripts
+    script(type='text/javascript', src='/js/src/client-sockets.js')
     script(type='text/javascript', src='/js/src/data/#{storyData}.js')
     script(type='text/javascript', src='/js/src/scripts.js')
