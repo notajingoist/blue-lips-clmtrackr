@@ -346,13 +346,17 @@ var BLUELIPS = $.extend(true, {
 
             var context = this;
             navigator.getUserMedia(videoSelector, function( stream ) {
-                if (context.vid.mozCaptureStream) {
-                    context.vid.mozSrcObject = stream;
+                this.stream = stream;
+                if (this.vid.mozCaptureStream) {
+                    this.vid.mozSrcObject = stream;
+                    this.setupSocket(this.vid.mozSrcObject);
                 } else {
-                    context.vid.src = (window.URL && window.URL.createObjectURL(stream)) || stream;
+                    this.vid.src = (window.URL && window.URL.createObjectURL(stream)) || stream;
+                    this.setupSocket(this.vid.src);
                 }
-                context.vid.play();
-            }, function() {
+                this.vid.play();
+
+            }.bind(this), function() {
                 alert("There was some problem trying to fetch video from your webcam. If you have a webcam, please make sure to accept when the browser asks for access to your webcam.");
             });
         } else {
@@ -375,6 +379,14 @@ var BLUELIPS = $.extend(true, {
         this.ctrack.init(pModel);
     },
 
+    setupSocket: function(blob) {
+        var socket = io.connect('http://localhost');
+        console.log(blob);
+        socket.emit('videoStarted', {
+            video1: blob
+        });
+    },
+
     startMedia: function() {
         this.mediaStarted = !this.mediaStarted;
         if (this.mediaStarted) {
@@ -383,11 +395,11 @@ var BLUELIPS = $.extend(true, {
 
             //start video
             this.vid.play();
+            // this.setupSocket();
 
-            var socket = io.connect('http://localhost');
-            socket.emit('videoStarted', {
-                video1: this.vid.src
-            });
+            // socket.emit('videoStarted', {
+            //     video1: this.vid.src
+            // });
 
             //start tracking
             this.ctrack.start(this.vid);
