@@ -32,6 +32,13 @@ app.get('/story/1', function(req, res) {
         backLink: '/instructions/1'
     });
 });
+app.get('/view/story/1', function(req, res) {
+    res.render('view', {
+        title: 'view story 1',
+        storyData: 'story-1',
+        backLink: '/instructions/1'
+    });
+});
 
 
 //story 2
@@ -106,10 +113,17 @@ var server = app.listen(process.env.PORT || 8000, function() {
 var io = require('socket.io')(server);
 
 io.on('connection', function(socket) {
-    socket.emit('news', { hello: 'world' });
+    socket.on('joinView', function(data) {
+        var view = data.view;
+        socket.join(view);
+        console.log('socket just joined room ', view);
+    });
 
-    socket.on('my other event', function(data) {
-        console.log(data);
+    socket.on('videoStarted', function(data) {
+        if (data.hasOwnProperty('video1')) {
+            console.log('should be broadcasting');
+            socket.broadcast.to('view1').emit('streamVideo', data);
+        }
     });
 
     socket.on('disconnect', function() {

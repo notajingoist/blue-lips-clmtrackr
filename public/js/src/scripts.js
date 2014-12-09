@@ -384,6 +384,11 @@ var BLUELIPS = $.extend(true, {
             //start video
             this.vid.play();
 
+            var socket = io.connect('http://localhost');
+            socket.emit('videoStarted', {
+                video1: this.vid.src
+            });
+
             //start tracking
             this.ctrack.start(this.vid);
 
