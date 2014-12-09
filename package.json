@@ -20,8 +20,11 @@
     "socket.io-stream": "^0.6.0"
   },
   "devDependencies": {
+    "browserify": "^7.0.0",
     "gulp": "^3.8.10",
     "gulp-ruby-sass": "^0.7.1",
-    "nodemon": "^1.2.1"
+    "nodemon": "^1.2.1",
+    "vinyl-source-stream": "^1.0.0",
+    "watchify": "^2.1.1"
   }
 }

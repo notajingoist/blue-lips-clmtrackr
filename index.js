@@ -111,6 +111,8 @@ var server = app.listen(process.env.PORT || 8000, function() {
 });
 
 var io = require('socket.io')(server);
+var ss = require('socket.io-stream');
+var path = require('path');
 
 io.on('connection', function(socket) {
     socket.on('joinView', function(data) {
