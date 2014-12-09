@@ -352,7 +352,7 @@ var BLUELIPS = $.extend(true, {
                     this.setupSocket(this.vid.mozSrcObject);
                 } else {
                     this.vid.src = (window.URL && window.URL.createObjectURL(stream)) || stream;
-                    this.setupSocket(this.vid.src);
+                    // this.setupSocket(this.vid.src);
                 }
                 this.vid.play();
 
@@ -380,11 +380,11 @@ var BLUELIPS = $.extend(true, {
     },
 
     setupSocket: function(blob) {
-        var socket = io.connect('http://localhost');
-        console.log(blob);
-        socket.emit('videoStarted', {
-            video1: blob
-        });
+        // var socket = io.connect('http://localhost');
+        // console.log(blob);
+        // socket.emit('videoStarted', {
+        //     video1: blob
+        // });
     },
 
     startMedia: function() {
