@@ -342,7 +342,7 @@ var data = {
         '112.0':'ffffff',
     },
     expressions: {
-        '3.0':expressions.img1,
+        '0.0':expressions.img1,
         '10.0':expressions.img2,
         '15.0':expressions.img3,
         '19.0':expressions.img4,
