@@ -222,7 +222,7 @@ var expressions = {
 };
 
 var data = {
-    name: '/story/2',
+    name: '/welcome/2',
     audio: '/audio/filmSpiritual.mp3',
     colors: {
         '3.0':'ef7e6f',

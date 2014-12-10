@@ -79,7 +79,7 @@ var expressions = {
 };
 
 var data = {
-    name: '/story/1',
+    name: '/welcome/1',
     audio: '/audio/theBallWithMusic.mp3',
     colors: {
         '0.0':"f4e8cd",
