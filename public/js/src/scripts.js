@@ -12,7 +12,7 @@ var BLUELIPS = $.extend(true, {
         this.$feedback = $('.feedback');
         this.$content = $('.main-content');
         this.$message = $('.text-story');
-        this.$score = $('.score');
+        //this.$score = $('.score');
         this.$phrase = $('.phrase');
         this.$media = $('.media');
         this.$face = $('.face');
@@ -225,7 +225,7 @@ var BLUELIPS = $.extend(true, {
 
     updateTimer: function() {
         this.scoreArr.push(this.score);
-        this.$score.html(this.score);
+        //this.$score.html(this.score);
         this.timer = setTimeout(this.updateTimer.bind(this), 100);
     },
 

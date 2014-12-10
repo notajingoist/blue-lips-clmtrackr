@@ -1,80 +1,212 @@
 var expressions = {
-    yawn: {
+    face1: {
         emotions: {
-            angry: 0.27768,
-            sad: 0.108,
-            surprised: 0.407,
-            happy: 0.072
-        },
-        templates: ['surprised', 'happy'],
-        phrase: 'yawn. imagine a long day.',
-        image: '/images/yawn.png'
-    },
-    neutral: {
-        emotions: {
-            angry: 0.01,
-            sad: 0.937,
-            surprised: 0.1229,
-            happy: 0.0148
+            angry: 1,
+            sad: 1,
+            surprised: 1,
+            happy: 1
         },
         templates: [],
-        phrase: 'Neutral. imagine writing an email.',
-        image: '/images/neutral.png'
+        phrase: 'Be in awe - just saw jesus.',
+        image: '/images/wistful.png'
     },
-    awake: {
-        emotion: {
-            angry: 0.001885,
-            sad: 0.8422231,
-            surprised: 0.8269,
-            happy: 0.0193167
-        },
-        templates: ['sad', 'surprised'],
-        phrase: 'Imagine that you just drank caffeine',
-        image: '/images/awake.png'
-    },
-    perform1: {
+    disdain: {
         emotions: {
-            angry: 0.83,
-            sad: 0.062,
-            surprised: 0.00661,
-            happy: 0.0003673
+            angry: 1,
+            sad: 1,
+            surprised: 1,
+            happy: 1
         },
-        templates: ['angry'],
-        phrase: 'Imagine that you\'re entertaining a small child.',
-        image: '/images/perform1.png'
+        templates: [],
+        phrase: 'you do not approve of what is happening',
+        image: '/images/disdain.png'
     },
-    perform2: {
+    snarl: {
         emotions: {
-            angry: 0.04081,
-            sad: 0.102,
-            surprised: 0.358,
-            happy: 0.801
+            angry: 1,
+            sad: 1,
+            surprised: 1,
+            happy: 1
         },
-        templates: ['happy'],
-        phrase: 'Imagine that you\'re entertaining a small child.',
-        image: '/images/perform2.png'
+        templates: [],
+        phrase: 'you\'re at the dentist - show your teeth',
+        image: '/images/snarl.png'
     },
-    neutralOpenMouth: {
+    eager: {
         emotions: {
-            angry: 0.410222,
-            sad: 0.532,
-            surprised: 0.1151,
-            happy: 0.0001
+            angry: 1,
+            sad: 1,
+            surprised: 1,
+            happy: 1
         },
-        templates: ['sad'],
-        phrase: '+++ make a noise for bonus points +++',
-        image: '/images/neutralOpenMouth.png'
+        templates: [],
+        phrase: 'eager',
+        image: '/images/eager.png'
     },
-    surprise: {
+    glee: {
         emotions: {
-            angry: 0.0772,
-            sad: 0.3195,
-            surprised: 0.05553,
-            happy: 0.022
+            angry: 1,
+            sad: 1,
+            surprised: 1,
+            happy: 1
         },
-        templates: ['surprised'],
-        phrase: 'Imagine that you just saw a pink elephant!!',
-        image: '/images/surprise.png'
+        templates: [],
+        phrase: 'glee',
+        image: '/images/glee.png'
+    },
+    moreglee: {
+        emotions: {
+            angry: 1,
+            sad: 1,
+            surprised: 1,
+            happy: 1
+        },
+        templates: [],
+        phrase: 'more glee',
+        image: '/images/moreglee.png'
+    },
+    disgusted: {
+        emotions: {
+            angry: 1,
+            sad: 1,
+            surprised: 1,
+            happy: 1
+        },
+        templates: [],
+        phrase: 'You are disgusted',
+        image: '/images/disgusted.png'
+    },
+    delight: {
+        emotions: {
+            angry: 1,
+            sad: 1,
+            surprised: 1,
+            happy: 1
+        },
+        templates: [],
+        phrase: 'pure delight!',
+        image: '/images/delight.png'
+    },
+    zonedout: {
+        emotions: {
+            angry: 1,
+            sad: 1,
+            surprised: 1,
+            happy: 1
+        },
+        templates: [],
+        phrase: 'nothing affects you anymore',
+        image: '/images/zonedout.png'
+    },
+    rock: {
+        emotions: {
+            angry: 1,
+            sad: 1,
+            surprised: 1,
+            happy: 1
+        },
+        templates: [],
+        phrase: 'You are a rock with shifty eyes',
+        image: '/images/rock.png'
+    },
+    dog: {
+        emotions: {
+            angry: 1,
+            sad: 1,
+            surprised: 1,
+            happy: 1
+        },
+        templates: [],
+        phrase: 'You are a panting dog',
+        image: '/images/dog.png'
+    },
+    exhaustion: {
+        emotions: {
+            angry: 1,
+            sad: 1,
+            surprised: 1,
+            happy: 1
+        },
+        templates: [],
+        phrase: 'deadpan exhaustion',
+        image: '/images/exhaustion.png'
+    },
+    sigh: {
+        emotions: {
+            angry: 1,
+            sad: 1,
+            surprised: 1,
+            happy: 1
+        },
+        templates: [],
+        phrase: '++ sigh out loud for bonus points ++',
+        image: '/images/sigh.png'
+    },
+    swift: {
+        emotions: {
+            angry: 1,
+            sad: 1,
+            surprised: 1,
+            happy: 1
+        },
+        templates: [],
+        phrase: 'as Taylor Swift would say - shake it off!',
+        image: '/images/swift.png'
+    },
+    popcorn: {
+        emotions: {
+            angry: 1,
+            sad: 1,
+            surprised: 1,
+            happy: 1
+        },
+        templates: [],
+        phrase: 'Does it smell like popcorn?',
+        image: '/images/popcorn.png'
+    },
+    notpopcorn: {
+        emotions: {
+            angry: 1,
+            sad: 1,
+            surprised: 1,
+            happy: 1
+        },
+        templates: [],
+        phrase: 'Oh well... not popcorn.',
+        image: '/images/notpopcorn.png'
+    },
+    hypnotized: {
+        emotions: {
+            angry: 1,
+            sad: 1,
+            surprised: 1,
+            happy: 1
+        },
+        templates: [],
+        phrase: 'I think I might be getting hypnotized..',
+        image: '/images/hypnotized.png'
+    },
+    eternity: {
+        emotions: {
+            angry: 1,
+            sad: 1,
+            surprised: 1,
+            happy: 1
+        },
+        templates: [],
+        phrase: 'My life depends on reading this sentence',
+        image: '/images/eternity.png'
+    },
+    bemused: {
+        emotions: {
+            angry: 1,
+            sad: 1,
+            surprised: 1,
+            happy: 1
+        },
+        templates: [],
+        phrase: 'bemused smile',
+        image: '/images/bemused.png'
     }
 };
 
