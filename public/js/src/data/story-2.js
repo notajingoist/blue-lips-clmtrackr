@@ -65,6 +65,17 @@ var expressions = {
         phrase: 'more glee',
         image: '/images/img6.png'
     },
+    img65: {
+        emotions: {
+            angry: 1,
+            sad: 1,
+            surprised: 1,
+            happy: 1
+        },
+        templates: [],
+        phrase: 'you are bored',
+        image: '/images/img10.png'
+    },
     img7: {
         emotions: {
             angry: 1,
@@ -348,6 +359,7 @@ var data = {
         '19.0':expressions.img4,
         '21.0':expressions.img5,
         '24.0':expressions.img6,
+        '26.0':expressions.img65,
         '30.0':expressions.img7,
         '33.0':expressions.img8,
         '41.0':expressions.img9,
