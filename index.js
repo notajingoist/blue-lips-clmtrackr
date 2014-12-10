@@ -59,7 +59,7 @@ app.get('/story/2', function(req, res) {
     res.render('story', {
         title: 'story 2',
         storyData: 'story-2',
-        backLink: '/instructions/1'
+        backLink: '/instructions/2'
     });
 });
 

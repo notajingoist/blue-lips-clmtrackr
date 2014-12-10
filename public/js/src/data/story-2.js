@@ -161,7 +161,7 @@ var expressions = {
             happy: 1
         },
         templates: [],
-        phrase: 'as Taylor Swift would say - shake it off!',
+        phrase: 'ah whatever',
         image: '/images/img14.png'
     },
     img15: {
