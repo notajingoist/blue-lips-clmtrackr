@@ -8,19 +8,19 @@ app.use(express.static(__dirname + '/public'));
 //story 1
 app.get('/', function(req, res) {
     res.render('welcome', {
-        title: 'welcome',
+        title: 'welcome - story 1',
         instructionsLink: '/instructions/1'
     });
 });
 app.get('/welcome/1', function(req, res) {
     res.render('welcome', {
-        title: 'welcome',
+        title: 'welcome - story 1',
         instructionsLink: '/instructions/1'
     });
 });
 app.get('/instructions/1', function(req, res) {
     res.render('instructions', {
-        title: 'instructions',
+        title: 'instructions - story 1',
         storyLink: '/story/1',
         backLink: '/welcome/1'
     });
@@ -44,13 +44,13 @@ app.get('/story/1', function(req, res) {
 //story 2
 app.get('/welcome/2', function(req, res) {
     res.render('welcome', {
-        title: 'welcome',
+        title: 'welcome - story 2',
         instructionsLink: '/instructions/2'
     });
 });
 app.get('/instructions/2', function(req, res) {
     res.render('instructions', {
-        title: 'instructions',
+        title: 'instructions - story 2',
         storyLink: '/story/2',
         backLink: '/welcome/2'
     });
@@ -66,14 +66,14 @@ app.get('/story/2', function(req, res) {
 //story 3
 app.get('/welcome/3', function(req, res) {
     res.render('welcome', {
-        title: 'welcome',
+        title: 'welcome - story 3',
         instructionsLink: '/instructions/3'
     });
 });
 
 app.get('/instructions/3', function(req, res) {
     res.render('instructions', {
-        title: 'instructions',
+        title: 'instructions - story 3',
         storyLink: '/story/3',
         backLink: '/welcome/3'
     });
